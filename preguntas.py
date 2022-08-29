@@ -50,8 +50,27 @@ def pregunta_02():
     ]
 
     """
-    return
+    with open("data.csv") as fichero_csv:
+        datos = fichero_csv.readlines()
+        datos = [linea.replace("\n","") for linea in datos]
+        datos = [linea.replace("\t",",") for linea in datos]
+        datos = [linea.split(",") for linea in datos]
 
+        lista_letras = [letra for linea in datos for letra in linea[0]]
+        lista_tuplas = []
+        x=[]
+
+        for i in lista_letras:
+            if i not in x:
+                x.append(i)
+
+        for i in sorted(x):
+            conteo = lista_letras.count(i)
+            tupla=(i,conteo)
+            lista_tuplas.append(tupla)            
+        return lista_tuplas
+
+pregunta_02()
 
 def pregunta_03():
     """
