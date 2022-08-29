@@ -16,6 +16,11 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 import csv
 import readline
 
+with open("data.csv") as fichero_csv:
+        datos = fichero_csv.readlines()
+        datos = [linea.replace("\n","") for linea in datos]
+        datos = [linea.replace("\t",",") for linea in datos]
+        datos = [linea.split(",") for linea in datos]
 
 def pregunta_01():
     """
@@ -25,14 +30,9 @@ def pregunta_01():
     214
 
     """
-    with open("data.csv") as fichero_csv:
-        datos = fichero_csv.readlines()
-        datos = [linea.replace("\n","") for linea in datos]
-        datos = [linea.replace("\t",",") for linea in datos]
-        datos = [linea.split(",") for linea in datos]
         
-        columna2 = [int(elemento) for linea in datos for elemento in linea[1]]
-        return sum(columna2)
+    columna2 = [int(elemento) for linea in datos for elemento in linea[1]]
+    return sum(columna2)
 
 
 def pregunta_02():
@@ -50,25 +50,19 @@ def pregunta_02():
     ]
 
     """
-    with open("data.csv") as fichero_csv:
-        datos = fichero_csv.readlines()
-        datos = [linea.replace("\n","") for linea in datos]
-        datos = [linea.replace("\t",",") for linea in datos]
-        datos = [linea.split(",") for linea in datos]
 
-        lista_letras = [letra for linea in datos for letra in linea[0]]
-        lista_tuplas = []
-        x=[]
-
-        for i in lista_letras:
-            if i not in x:
-                x.append(i)
-
-        for i in sorted(x):
-            conteo = lista_letras.count(i)
-            tupla=(i,conteo)
-            lista_tuplas.append(tupla)            
-        return lista_tuplas
+    lista_letras = [letra for linea in datos for letra in linea[0]]
+    lista_tuplas = []
+    x=[]
+    for i in lista_letras:
+        if i not in x:
+            x.append(i)
+    for i in sorted(x):
+        conteo = lista_letras.count(i)
+        tupla=(i,conteo)
+        lista_tuplas.append(tupla) 
+        
+    return lista_tuplas
 
 def pregunta_03():
     """
@@ -85,8 +79,19 @@ def pregunta_03():
     ]
 
     """
-    return
 
+    lista_letras = [letra for linea in datos for letra in linea[0]]
+    lista_numeros = [numero for linea in datos for numero in linea[1]]
+    lista = list(zip(lista_letras,lista_numeros))
+    diccionario = {}
+    for key, value in lista:
+        if key in diccionario:
+            diccionario[key]+= int(value)
+        else:
+            diccionario[key]=int(value)
+    resultado = [(key, diccionario[key]) for key in diccionario]
+    
+    return (sorted(resultado))
 
 def pregunta_04():
     """
@@ -110,8 +115,20 @@ def pregunta_04():
     ]
 
     """
-    return
 
+    fechas =[linea[2] for linea in datos]
+    meses = [mes.split("-")[1] for mes in fechas]
+    x=[]
+    lista_tuplas=[]
+    for i in meses:
+        if i not in x:
+            x.append(i)
+    for i in sorted(x):
+        conteo = meses.count(i)
+        tupla=(i,conteo)
+        lista_tuplas.append(tupla)         
+        
+    return (lista_tuplas)
 
 def pregunta_05():
     """
@@ -128,8 +145,27 @@ def pregunta_05():
     ]
 
     """
-    return
 
+    lista_letras = [letra for linea in datos for letra in linea[0]]
+    lista_numeros = [numero for linea in datos for numero in linea[1]]
+    lista = list(zip(lista_letras,lista_numeros))
+
+    diccionario={}
+
+    for key, value in lista:
+        if key in diccionario:
+            diccionario[key]+= [int(value)]
+        else:
+            diccionario[key]= [int(value)]
+    resultado = [(key, diccionario[key]) for key in diccionario]
+    resultado = sorted(resultado)
+
+    lista_tuplas = []
+    for key, value in resultado:
+        tupla=(key, max(value), min(value))
+        lista_tuplas.append(tupla)
+        
+    return lista_tuplas
 
 def pregunta_06():
     """
