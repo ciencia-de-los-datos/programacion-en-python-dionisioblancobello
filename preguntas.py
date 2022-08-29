@@ -70,8 +70,6 @@ def pregunta_02():
             lista_tuplas.append(tupla)            
         return lista_tuplas
 
-pregunta_02()
-
 def pregunta_03():
     """
     Retorne la suma de la columna 2 por cada letra de la primera columna como una lista
