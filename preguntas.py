@@ -12,15 +12,8 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
 
-
 import csv
 import readline
-
-with open("data.csv") as fichero_csv:
-        datos = fichero_csv.readlines()
-        datos = [linea.replace("\n","") for linea in datos]
-        datos = [linea.replace("\t",",") for linea in datos]
-        datos = [linea.split(",") for linea in datos]
 
 def pregunta_01():
     """
@@ -30,10 +23,14 @@ def pregunta_01():
     214
 
     """
+    with open("data.csv") as fichero_csv:
+        datos = fichero_csv.readlines()
+        datos = [linea.replace("\n","") for linea in datos]
+        datos = [linea.replace("\t",",") for linea in datos]
+        datos = [linea.split(",") for linea in datos]
         
     columna2 = [int(elemento) for linea in datos for elemento in linea[1]]
     return sum(columna2)
-
 
 def pregunta_02():
     """
@@ -50,6 +47,11 @@ def pregunta_02():
     ]
 
     """
+    with open("data.csv") as fichero_csv:
+        datos = fichero_csv.readlines()
+        datos = [linea.replace("\n","") for linea in datos]
+        datos = [linea.replace("\t",",") for linea in datos]
+        datos = [linea.split(",") for linea in datos]
 
     lista_letras = [letra for linea in datos for letra in linea[0]]
     lista_tuplas = []
@@ -79,11 +81,17 @@ def pregunta_03():
     ]
 
     """
+    with open("data.csv") as fichero_csv:
+        datos = fichero_csv.readlines()
+        datos = [linea.replace("\n","") for linea in datos]
+        datos = [linea.replace("\t",",") for linea in datos]
+        datos = [linea.split(",") for linea in datos]
 
     lista_letras = [letra for linea in datos for letra in linea[0]]
     lista_numeros = [numero for linea in datos for numero in linea[1]]
     lista = list(zip(lista_letras,lista_numeros))
     diccionario = {}
+
     for key, value in lista:
         if key in diccionario:
             diccionario[key]+= int(value)
@@ -115,6 +123,11 @@ def pregunta_04():
     ]
 
     """
+    with open("data.csv") as fichero_csv:
+        datos = fichero_csv.readlines()
+        datos = [linea.replace("\n","") for linea in datos]
+        datos = [linea.replace("\t",",") for linea in datos]
+        datos = [linea.split(",") for linea in datos]
 
     fechas =[linea[2] for linea in datos]
     meses = [mes.split("-")[1] for mes in fechas]
@@ -145,6 +158,11 @@ def pregunta_05():
     ]
 
     """
+    with open("data.csv") as fichero_csv:
+        datos = fichero_csv.readlines()
+        datos = [linea.replace("\n","") for linea in datos]
+        datos = [linea.replace("\t",",") for linea in datos]
+        datos = [linea.split(",") for linea in datos]
 
     lista_letras = [letra for linea in datos for letra in linea[0]]
     lista_numeros = [numero for linea in datos for numero in linea[1]]
@@ -164,7 +182,7 @@ def pregunta_05():
     for key, value in resultado:
         tupla=(key, max(value), min(value))
         lista_tuplas.append(tupla)
-        
+
     return lista_tuplas
 
 def pregunta_06():
@@ -189,9 +207,26 @@ def pregunta_06():
     ]
 
     """
-    return
+    with open("data.csv") as fichero_csv:
+        datos = fichero_csv.readlines()
+        datos = [linea.replace("\n","") for linea in datos]
+        datos = [linea.split("\t") for linea in datos]
 
+    dic={}
+    columna5=[lista[4] for lista in datos]
+    l=[elemento.split(",") for elemento in columna5]
+    final=sorted([tuple(j.split(":")) for i in l for j in i])
+    
+    for key, value in final:
+        if key not in dic:
+            dic[key]=[int(value)]
+        else:
+            dic[key]+=[int(value)]
+        
+    resultado = [(key, min(dic[key]), max(dic[key])) for key in dic]
 
+    return resultado
+    
 def pregunta_07():
     """
     Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla contiene un
@@ -213,8 +248,25 @@ def pregunta_07():
     ]
 
     """
-    return
+    with open("data.csv") as fichero_csv:
+        datos = fichero_csv.readlines()
+        datos = [linea.replace("\n","") for linea in datos]
+        datos = [linea.split("\t") for linea in datos]
+    
+    diccionario={}
 
+    columna_numeros =[int(numero) for linea in datos for numero in linea[1]]
+    columna_letras =[letra for linea in datos for letra in linea[0]]
+
+    nuevo = list(zip(columna_numeros, columna_letras))
+
+    for key, value in nuevo:
+        if key not in diccionario:
+            diccionario[key]=[value]
+        else:
+            diccionario[key]+=[value]
+
+    return sorted(diccionario.items())
 
 def pregunta_08():
     """
@@ -236,11 +288,32 @@ def pregunta_08():
         (8, ["A", "B", "D", "E"]),
         (9, ["A", "B", "C", "E"]),
     ]
-
+    
     """
-    return
+    with open("data.csv") as fichero_csv:
+        datos = fichero_csv.readlines()
+        datos = [linea.replace("\n","") for linea in datos]
+        datos = [linea.split("\t") for linea in datos]
+    
+    diccionario={}
 
+    columna_numeros =[int(numero) for linea in datos for numero in linea[1]]
+    columna_letras =[letra for linea in datos for letra in linea[0]]
 
+    nuevo = list(zip(columna_numeros, columna_letras))
+
+    for key, value in nuevo:
+        if key not in diccionario:
+            diccionario[key]=[value]
+        else:
+            diccionario[key]+=[value]
+
+    resultado=[]
+    for i,j in sorted(diccionario.items()):
+        resultado.append((i, sorted(list(set(j)))))
+
+    return resultado
+    
 def pregunta_09():
     """
     Retorne un diccionario que contenga la cantidad de registros en que aparece cada
