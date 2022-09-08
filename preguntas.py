@@ -332,10 +332,24 @@ def pregunta_09():
         "iii": 18,
         "jjj": 18,
     }
-
     """
-    return
+    with open("data.csv") as fichero_csv:
+        datos = fichero_csv.readlines()
+        datos = [linea.replace("\n","") for linea in datos]
+        datos = [linea.split("\t") for linea in datos]
 
+    dic={}
+    columna5=[lista[4] for lista in datos]
+    l=[elemento.split(",") for elemento in columna5]
+    final=sorted([tuple(j.split(":")) for i in l for j in i])
+    claves=[elemento[0] for elemento in final]
+    lista=sorted(list(set(claves)))
+
+    for clave in lista:
+        dic[clave]=claves.count(clave)
+
+    return dic
+    
 
 def pregunta_10():
     """
@@ -353,10 +367,15 @@ def pregunta_10():
         ("E", 3, 3),
     ]
 
-
     """
-    return
+    with open("data.csv") as fichero_csv:
+        datos = fichero_csv.readlines()
+        datos = [linea.replace("\n","") for linea in datos]
+        datos = [linea.split("\t") for linea in datos]
 
+    lista_tuplas=[(lista[0], len(lista[3].split(",")), len(lista[4].split(","))) for lista in datos]
+
+    return lista_tuplas
 
 def pregunta_11():
     """
@@ -374,9 +393,22 @@ def pregunta_11():
         "g": 35,
     }
 
-
     """
-    return
+    with open("data.csv") as fichero_csv:
+        datos = fichero_csv.readlines()
+        datos = [linea.replace("\n","") for linea in datos]
+        datos = [linea.split("\t") for linea in datos]
+    
+    dic = {}
+    for lista in datos:
+        l = lista[3].split(",")
+        for i in l:
+            if i not in dic:
+                dic[i]=int(lista[1])
+            else:
+                dic[i]+=int(lista[1])
+
+    return (dict(sorted(dic.items())))
 
 
 def pregunta_12():
@@ -394,4 +426,24 @@ def pregunta_12():
     }
 
     """
-    return
+    with open("data.csv") as fichero_csv:
+        datos = fichero_csv.readlines()
+        datos = [linea.replace("\n","") for linea in datos]
+        datos = [linea.split("\t") for linea in datos]
+    
+    dic = {}
+    resultado=[]
+    for linea in datos:
+        l = linea[4].split(",")
+        for i in l:
+            x = i.split(":")
+            y = (linea[0], int(x[1]))
+            resultado.append(y)
+    
+    for letra in resultado:
+        if letra[0] not in dic:
+            dic[letra[0]] = int(letra[1])
+        else:
+            dic[letra[0]]+= int(letra[1])
+
+    return dict(sorted(dic.items()))
